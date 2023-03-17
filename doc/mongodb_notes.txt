@@ -1,0 +1,105 @@
+/*			MongoDB Ders Notlari				*/
+//
+//Source : https://www.w3schools.com/mongodb/
+
+//nosql ve unstructured yapiya sahip
+show dbs /*Tum db gormek icin*/
+use newveritabani /*DB oluturmak ve kullanmak icin use*/
+db.createCollection("x") /*Koleksiyon olusutrmak icin*/
+db.posts.insertOne(object) /*Koleksiyon olusturmak icin yine ikinci yontem*/
+
+//Tek dokuman eklemek icin
+db.posts.insertOne({
+  ...
+})
+//insertOne() methodu ile tek dokuman eklem icin
+
+//Coklu dokuman eklemek icin
+db.posts.insertMany([  
+  {
+    ...
+  },
+  {
+    ...
+  },
+  {
+    ...
+  }
+])
+//insertMany() ile coklu dokuman eklemek icin
+
+//Arama icin
+db.posts.find() /*Aramak ve secmek icin*/
+db.posts.findOne() /*Tek dokumanda aramak icin*/
+db.posts.find( {category: "Ne"} ) /*Dokuman icinde aramak icin yukaridaki iki methodu iceriyor.*/
+db.posts.find({}, {_id: 0, title: 1, date: 1}) /*Ozel olarak farkli sekilde aramada yapilabilir.*/
+
+//Guncellemek icin
+db.posts.updateOne( { title: "Title 1" }, { $set: { likes: 2 } } ) 
+
+db.posts.updateOne( 
+  { title: "Title 1" }, 
+  {
+    $set: 
+      {
+       ...
+      }
+  }, 
+  { upsert: true }
+)
+
+/*upsert eger yok ise eklemek yapmak icin ekliyoruz*/
+
+db.posts.updateMany({}, { $inc: { likes: 1 } }) 
+//$inc (increment) operatoru
+
+//Silmek icin
+db.posts.deleteOne({ title: "Title 1" })
+db.posts.deleteMany({ category: "Tech" })
+
+/*One olan methodlarda ilk buldugu ile islem yapar.*/
+/*Many olan methodlarda tum bulduklari ile islem yapar.*/
+
+/*
+Comparison/Karsilastirma
+
+    $eq : equal
+    $ne: not equal
+    $gt:  greater than
+    $gte: greater than or equal
+    $lt: less than
+    $lte: less than or equal
+    $in
+
+Logical/Mantiksal
+
+    $and
+    $ors
+    $nor
+    $not
+
+Evaluation
+
+    $regex: Allows the use of regular expressions when evaluating field values
+    $text: Performs a text search
+    $where: Uses a JavaScript expression to match documents
+
+*/
+
+/*
+MongoDB Update Operators
+
+    $currentDate
+    $inc
+    $rename
+    $set
+    $unset
+
+Array
+
+    $addToSet
+    $pop
+    $pull
+    $push
+
+*/

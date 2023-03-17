@@ -1,0 +1,807 @@
+#			R Ders Notlari				#
+
+#Source= Bilgisayar Kavramlari R-project Eğitim Serisi (Veri Madenciliği) : https://www.youtube.com/playlist?list=PLh9ECzBB8tJMedZGEJAT25f7EJrAj13fu
+#Source = YAZSUM Makine Öğrenmesi ve R Dili ile Bir Uygulama : https://www.youtube.com/watch?v=J0TlHARMZbY
+#Source= Bulut, Hasan . (2018) . R Uygulamalari ile Cok degiskenli istatiksel Yontemler . Nobel Yayinlari
+#Source= Kartal, Elif; Balaban, M. Erdal . (2018) . Veri Madenciligi ve Makine Ogrenmesi/Temel Algoritmalari ve R Dili ile Uygulamalari . Caglayan Yayinevi
+#Source= Kartal, Elif; Balaban, M. Erdal . (2019) . Veri Madenciligi ve Makine Ogrenmesi/Temel Kavramlar,Algoritmalar,Uygulamalar . Caglayan Yayinevi
+#Source= Atan, Suat; Emekci, Hakan . (2021) . R ile Veri Analizi (2.Baski) . Seckin Yayinevi
+
+#R web uygulamasi gelistirebilecegin framework : https://shiny.rstudio.com/
+R #Terminalde R calistirmak icin
+q() #R cikmak icin
+help() #Yardim dokumani icin paramatreli olarakta cagirilabilir.
+getwd() #Calistigimiz dizini gormek icin
+setwd("~/Documents/Project/R") #Istedigimiz bir dizinde calismasini sagliyabiliriz.
+save.image("deneme.rdata") #Yaptigimiz islemleri kaydetmek icin.
+load("~/deneme.rdata") #Kayditi acmak icin
+load(file.choose()) #Kayitli dosyayi acmak icin farkli bir yol
+#Script .Rd olarak kaydedebiliyoruz ama .r olarak kaydetmek daha iyi olur.
+?solve #Help parametreli halinin baska bir yazim sekli bu sekildedir.
+??solve #Iki soru isareti ile kelimenin gectigi fonksiyonlar aratilabiliyor.
+; #Satir C deki gibi birip ayni satirda birden fazla komut yazilabilir.
+# Yorum satiridir.
+#R is an interpreted language so run line a line
+#Filename extensions .r,rdata,rds,rda seklindedir.
+source('dosyadi') #Bu sekilde dosyayi acabilirsiniz.
+install.packages("paket_ismi") #Paketi kurmak icin
+library("paket_ismi") #Paketi import etmek icin
+history() #Yazdigimiz komutlari gormek icin.Linux terminalindeki ile ayni islem.Fakat kayit etmedigimizde oncekileri goremeyiz.
+history(5) #Deger vererek son kac tane komutu gormek istersek ekliyoruz.
+x <- 5 #Atama islemi <- seklinde oluyor.
+x = 5 #Esittir kabul ediyor.
+#Ekrana yazdirmak icin x yazip enterlamak yetiyor.Pythondan asina olundugu uzere
+y <- c(1,2,3) #Liste atamak icin
+#c vektor olusturmaya yariyor.
+x= "yazi" #string atamak icin tek tirnakta kabul ediyor.
+ls() #Hafiza olan degiskenleri gormek icin
+objects() #ls() komutu gibi yine hafizadaki objeleri degiskenleri gosterir.
+rm(x) #Hafizadan silemek icin degiskenin ismini vererek yapabiliriz.ls() dedigimizde silinmis ve gozukmiyecektir artik.
+rm(list=ls()) #Hafizanin tamamini silmek icin.
+rm(list=ls(all=TRUE)) #Yukaridaki ile ayni islemi yapar.
+#R kapattigimizda hafizada kalmiyor halen R calistigi surece hafizada yer tutuyor.
+2^6 #Us uslemi ^ ile yapiliyor.
+i <- 1:10 #: sequence dir. 1 den 10 kadar dahil 1 arttirip veya azaltarak bir sekans olusturmaya yarar.
+i <- 10:1 #Tersten yazilabilir bu sefer 1'er azalacaktir.
+i <- seq(10,0,-2) #: yerine boyle bir kullanimda var.
+seq(from=10, to=0, by=-2) #Yukaridaki islemin aynisi farkli yazimi
+seq(baslangic,bitis,adim) #Eger azltilmasi gerekiyor ise ornekteki gibi - deger girilmelidir.
+i <- seq(0,20,by=5) #Adimi by= seklinde de verilebilir.Hatta ondalikli degerlerde verilebilir.
+seq(1,2,0.3) -> i #Atama isleminin yonu degistirilebilir.Fakat normal atamlarda hata veriyor seq fonksiyonunda calisiyor.
+#Baska hangi fonksiyonlar icin -> hata vermedigini bilmiyorum.Hata almamak icin biz yine de <- kullanabiliriz.
+x <- rep(1903, times=5) #rep == repeat bir degiskenin veya degerin tekrarlanmasini istersek bu fonksiyonu kullaniyoruz.
+#times kac kere tekrar edecegini belirtiyoruz.
+x > 10 & x < 100 #& and icin | or kullaniliyor.Eger liste atanmis ise liste elemanlarinda tek tek kontorl edip sonuc donderiyor.
+#Orek bir liste ciktisi su sekilde : FALSE  TRUE  TRUE FALSE
+x <- paste(c('a','b'),1:5,sep='/') #"a/1" "b/2" "a/3" "b/4" "a/5" ciktisi
+#c olmaz ise "a/b/1" "a/b/2" "a/b/3" "a/b/4" "a/b/5"
+i[1] #c vektor olarak yaptigimizda vey seq olusturdugumuzda elemana erismek icin ayni sekilde fakat 0 dan degil 1 den basliyor indexler.
+i[i<10] #Kosul vererekte elemanlari alabiliriz.
+i[c(3,4,5)] #Bir listedeki istenilen elemanlar ile i deki listedekileri alabiliriz.
+
+y[-1] #- ile verdigimiz index degerindeki eleman almiyor diger tum elemanlari aliyor.
+#Yukaridaki ornekte ilk eleman haric tum elemanlar gozukecek
+y[-c(2,4,5)] #Basina eksi koydugumuzda yine dizideki elemanlarin index karsiligindakileri almaz.
+y[-seq(2,6)] #Yine seq ile de kullanilabilir.
+#Eger index degerini astiysaniz o ilgili indexteki elemanlari NA olarak gosteriyor.
+i[2:5] #Bu sekilde seq kullanarakta alabiliriz.
+#Matematiksel islemleri c veya seq ile olusturulmus olan bir degiskene denersek her bir elemana ayni islemi yapar.
+#Vektroler esit degil ise iki vektore birlikte matematiksel islem yapilamaz.
+x = c(1,2,3)
+y <- 2:4
+x^y #Ayni indextekiler ile islemi gerceklestiriyor.
+
+#Esit eleman sayisina sahip degiller ise asagidaki hata kodu olur.
+Warning message:
+In x * y : longer object length is not a multiple of shorter object length
+
+vek = c(34,1,9) 
+names(vek) = c("Istanbul","Adana","Aydin") #Olusturulan vektor isimlendirme yapabiliriz.
+##
+Istanbul    Adana    Aydin 
+      34        1        9 
+##
+#Yukaridaki sekilde isimlendirilmis oluyor.
+vek["Aydin"] #Bu sekilde de cagirabiliyoruz index vermeden.Asagidaki ciktiyi vercek.
+##
+Aydin 
+    9
+##
+plaka = c(1,9,34,20)
+plaka = c(plaka,54) #Vektorun sonuna yeni eleman eklemek icin
+plaka = append(plaka,c(36,48,41,40),after=3) #Belirli bir indexten sonrasina ekleme yapmak icin
+liste1 =list(11,22,33,44,55) #Liste olusturmak icin.Vektorlerdeki isim verilebilir.
+
+x = matrix(1:9,nrow=3,byrow=TRUE) #Matrix olusturmak icin matrix() fonksiyonunu kullaniyoruz.
+x = matrix(1:9,nrow=3,byrow=FALSE) #Sutun bazli olmasini saglamak icin byrow FALSE yaptik.
+#byrow TRUE oldugunda satir bazli oluyor.
+#Transpozunu olusturmak icin de kullanabilirsin.
+#1:9 old. sayilar 1'den 9'a kadar dahil sayilari icerebiliyor.
+#nrow yazdiracagimiz sayi araligi kadar olmaz ise hata veriyor.
+#Yukaridaki ornekte 4 yaparsak hata mesaji geliyor ama matrixi olusturuyor.
+#Olusturdugumuz matrix type yine matrix olarak gozukuyor.
+x[1,4] #x[satir,sutun] seklinde elemani alabiliriz.
+
+##
+     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    4    5    6
+[3,]    7    8    9
+
+#Ornek bir matix burdan da hangi elemani alacagin gozukuyor.
+#Ornmek 8 icin [3,] ve [,2] gozukuyor x[3,2] yaparak alabilirsin.
+#Yine hangi kolon veya satiri alacagini belirtiyor.
+x[,2] #Sadece ikinci stunu
+x[3,] #Sadece ucuncu satiri bu sekilde alabiliyoruz.
+##
+x[-2,2] #Ikinci stunun ikinci elemani almayicak.Cikti 2 8 olacak.
+x[c(1,2),2]
+x * 10 #Tum elemanlari 10 ile carpiyoruz.
+x + y #Iki matrix toplama islemi de yapilabilir vektorlerde oldugu gibi
+#Ornekler cogaltilabilir matrixler array of array oldugundan dizi gibi islemler yapilabilir.
+vek = as.vector(matris) #Vektoru matrise cevirmek icin
+t(matris) #Matrixin transpozunu almak icin t() kullaniyoruz.
+solve(matris) #Matrisin tersini almaya yariyor fakat 3x3 hata veriyor.2x2 calisiyor.
+matris%*%solve(matris) #Matrisin ters olup olmadigini kontrol etmek icin.Asagidaki ciktiyi verir.
+##
+      [,1] [,2]
+[1,]    1    0
+[2,]    0    1
+##
+karma = data.frame(matris,solve(matris)) #Data frame objesi olusturmak icin data.frame ile yapiyoruz.
+colnames(karma) #Kolon basliginin isimlerini donderir.
+rownames(veri) #Satir isimlerini donderir.
+rownames(veri) = veri$boy #Satir ismini degistirebiliriz.Fakat unique degerler olmali yoks kabul etmiyor.
+dimnames(veri) #Ana stun basliklari gosterdi.
+ncol(veri) #Kac stun oldugunu donderir.
+nrow(veri) #Kac satir oldugunu donderir.
+ncols(),nrows() dataframe icin
+#Iki data frame birlestirmek icin cbin veya rbind kullanabilirsin.
+matris = matris[-2,] #2. indexteki satiri silmek icin bu islemi yaptik.
+matris = matris[,-2] #2. indexteki stunu silmek icin bu islemi yaptik.
+#Matrix satir veya stun eklemek icin rbind ,cbind kullaniyoruz.
+
+cins = c("erkek", "kadin")
+vekt = c("Ali","Ayse","Ahmet","Asli")
+es = split(vekt,rep(cins,2)) #Gruplandirma islemini split() ile bu sekilde yapabilirsin.
+kar = lapply(vekt,nchar) #Kac karakter oldugunu her bir elemana bakarak yapmak icin ayni fonksiyon uygularken bu sekilde
+#tapply var yine ayni fonksiyonu tum veri setine uygulamak icin
+#mapply birden fazla kolona islem yapmak icin
+#denapply,eapply,rollapply,sapply,vapply olanlarda var fakat detayini bilmiyorum.
+by(veri$cinsiyet,veri$boy,mean) #Gruplandirma islemini by ile yapiyoruz SQL deki gibi
+
+#Matematiksel Islemler
++, -, *, / #Dort islem
+2**2 #Pythondaki gibi yine us alma islemi icin
+2^2 #^ us alma icin kullanilir.
+10%%3 #Mod islemi icin iki % kullaniyoruz.
+x%*%y #Vektorel ic carpim
+x%o%y #Vektorel dis carpim
+
+#Donguler
+for(i in 1:10){ #range(1,11) ile ayni islem 1:10
+print(i) #print yine ekrana yazdirma islemi icin
+}
+
+while (x<10){
+x = x+1
+print(x)
+}
+
+#Kosullar
+if (x == 10) {
+print("x = 10")
+} else if (x < 10) {
+print ("x 10'dan kucuk")
+} else {
+print("x 10'dan buyuk")
+}
+
+#Fonksiyonlar
+typeof(x) #Hangi tipte oldugunu gosterir.
+mode(x) #Degiskenin nasil saklandigini gosterir.
+class(x) #Nesnenin ait old. sinif tipini gosterir.
+exp(x) #x yerine deger girip e^x islemini gerceklestirebilirsin.
+log(x) #ln(x) islemini yapiyor.
+log10(x) #log 10 tabaninda
+log(y,x) #x tabinda y log bulur.
+pi #pi sayisini donderir.
+factorial(x) #Faktoriyel hesabi icin
+abs(x) #Mutlak degerini almak icin
+sqrt(x) #Karekok alma islemi icin
+choose(x,y) #x'in y'li kombinasyonu
+range(x) #Vektorundeki degerlerin acikligini verir.
+scale(x) #Vektoru standartlastirir.
+max(x) #Vektordeki en buyuk degeri donderir.
+min(x) #Vektordeki en kucuk degeri donderir.
+sum(x) #Vektordeki elemanlarin toplamini verir.
+prod(x) #Vektordeki elemanlari carpar.
+mean(x) #Vektorun ortalamasini verir.
+mean(veri, na.rm=TRUE) #NA degerlerini goz ardi edip hesaplama yapcak.
+#na.rm=TRUE parametresi baskalari icin de kullanilabiliyor.
+mad(x) #Ortalama sapma
+var(x) #Vektorun varyansini verir.
+sd(x) #Vektorun standart sampasini verir.
+length(x) #Vektorun boyutunu verir.
+median(x) #Vektorun medyanini verir.
+cov(x,y) #x ve y vektorlerinin kovaryansini verir.
+cor(x,y) #x ve y vektorlerinin korelasyonunu verir.
+cos(x) #Radyan olarak Kosinus
+sin(x) #Radyan olarak Sinus
+tan(x) #Radyan olarak Tanjant
+#Radyan olmalarinin nedeni farkli degerler veriyor sin(0), cos(0) degerleri ayni fakat sin(90) != 1 farkli degerler yani
+ncol(x) #Matrisin stun sayisini verir.
+nrow(x) #Matrisin satir sayisini verir.
+dim(x) #Matrisin boyutunu verir.
+colMeans(x) #Matrisin stunlarinin ortalamasini verir.
+rowMeans(x) #Matrisin satirlarin ortalamasini verir.
+colSums(x) #Stunlarin toplamlarini veriyor.
+rowSums(x) #Satirlarin toplamini verir.
+cummax(x) #Kumulatif max
+cummin(x) #Kumulatif min
+cumsum(x) #Kumulatif toplam
+cumprod(x) #Kumulatid carpim
+str(x) #Verinin genel olarak ozelliklerini belirtir.
+summary(veri) #Verinin ozet istatistiklerini gosterir.
+which(x == 4) #Vektorde degerin oldugu indexi verir.
+which.min(x) #En kucuk elemanin oldugu indexi verir.
+which.max(x) #En kucuk elemanin oldugu indexi verir.
+x%*%y #x ve y matrisinin carpimini verir.
+crossprod(x,y) #A'B
+det(x) #Bir matrisin determinant almak icin.
+diff(x) #Ikili farklarini alir.
+diff(x,2) #Ikiserli farklarini alir.
+setdiff(x,y) #Birbirlerinde olmayan degerleri gosterir.
+setequal(x,y) #Ayni degerler varsa esit kabul ediyor siralamaya bakmiyor.
+identical(x,y) #Tamamen ayni olmalidir.
+diag(x) #Matrisin kosegen elemanlarini donderir.
+solve(x) #Matrisin tersini aliyor.Fakat bende hata verdi.
+eigen(x) #Matrisin ozdegerlerini ve ozvektorlerini verir.
+rep(x,2) #Matrisi belirtilen sayi kadat tekrar yazar.2 ornek olarak verilmistir.
+seq(x,y,z) #x'den y'ye kadar z kadar buyultup kucultur.
+apply(x,1,sum) #x vektorunu sonda belirtilen methodlari uygular.3x3 luk matriste 1==satir ve 2=stun 
+#Daha buyuk matrislerde ayni satir ve stun olabilir ama ben garanti olsun die boyle bir ibare kullandim simdilik.
+#sona ekleyebildigimiz methodlar: mean,var,sd,median,sum, ... v.b. hesaplamalar yaptirilabilir.
+floor(x) #Kucuge yuvarlar.
+round() #Yuvarlama islemi yapar.
+order(x) #Verileri siralayarak index numaralari verir yaziyor fakat degisik degerler dondurdu.
+sort(x) #Siralamak icin
+sort(x,decreasing = TRUE) #Tersten siralamak icin default degeri FALSE'dur.
+table(x) #Siklik(frekans) tablosu olusturmak icin
+prop.table(x) #Yuzde dagilimi hesaplamak icin
+quantile(x) #quantile ceyreklikler icin kullaniyoruz.
+IQR(x) #Ceyrekler arasi araligi hesaplar Q3-Q1 burda %75-%25'dir.
+intersect(x,y) #Kesisimini alir.
+union(x,y) #Birlesimini alir.
+qr(x) #QR decomposition ortogonal matris icin
+rank(x) #Elemanlarin sirasini gosterir.
+all(x>=1) #All tum degerlerin kosulu sagladiginda TRUE donderir.
+any(x<5) #Any sadece biri bile kosulu saglar ise TRUE donderir.
+x = scan() #scan veri okumak icin bos olarak enter basmadiginiz surece okuma yapmaya devam eder.
+x = scan(sep=',') #Ayraci belirterek okuma yapabilirsin.Bu ornekte tek satirda virgulle ayrilmislari vektor olarak tuttuk.
+levels(x) #Factorun kategorilerini gosterir.
+isSymmetric(matris) #Matrisin simetrik olup olmadigini kontrol etmek icin kullanabiliriz.
+is.numeric(boy) #Numeric kontorlu icin is olanlar TRUE veya FALSE donderir.
+is.character(cinsiyet) #Karakter tipinde mi konrolu icin
+is.vector(liste) #Vector tipinde mi konrolu icin
+is.matrix(matris) #Matrix tipinde mi konrolu icin
+is.data.frame(veri) #Data frame tipinde mi konrolu icin
+is.na(veri) #NA tipinde mi kontrolu icin
+is.null(veri) #NULL tipinde mi kontrol etmek icin.
+#Type casting
+as.numeric(cinsiyet) #Numceric tipine donusturmek icin, fakat NA olarak hepsini donderdi.
+as.vector(cinsiyet) #Vector tipine dondermik icin, NA olan degerler tekrar e ve k dondu yukaridaki islemden sonra
+as.character(cinsiyet) #Karakter tipine dondurmek icin, yine numeric tipine donusen NA tekrar e ve k oldu.
+as.matrix(cinsiyet) #Matrix veri tipine donusturmek icin, fakat nrow ve ncol olmadigindan mi tek stunlu yapti.
+as.data.frame(cinsiyet) #Data frame tipine donusturmek icin
+anyNA(veri) #Verimizde NA degerleri olup olmadigini kontrol etmek icin
+anyDuplicated(veri) #Tekrarlayan veri olup olmadigini kontrol etmek icin
+na.omit(veri) #NA olan satirlari silmek icin
+
+
+esitmi = function(x,y) { #Parametreli fonksiyon
+if(x == y){
+return("esit")
+} else {
+return("esit degil") #Return etmek icin
+}
+}
+
+esitmi(10,20)
+
+ad = "Ahmet"
+soyad = "Yilmaz"
+paste(ad,soyad) #Stringleri ekleme islemi paste ile
+paste(ad,soyad,sep=',') #Sep parametresini ayirma islemini nasil yapacagimizi belirtiyoruz.
+prf = sprintf("Kullanici %s adinda ve %s soyadinda onayliyor musunuz?",ad,soyad) #Python f string islemi benzer sekilde yapmak icin.
+substr(soyad,5,6) #String Parcalamak icin sonuna ekledigimiz iki sayi baslangiz ve bitis belirtmek icin
+tarih = "10/11/2023"
+strsplit(tarih,'/') #Bir karaktere gore parcalamak icin
+gsub("adinda","ad",prf) #gsub() == replace() ifadeleri degistirmek icin
+
+takim = c("BJK","GS","Trabzon")
+combn(takim,m=2) #Eslestirmek icin
+combn(takim,m=2, FUN=paste, collapse='-') #Aralarinda collapse ile ne olacagini yazip paste ekliyoruz.Diger turlu tablo olarak gosteriyor.
+
+Sys.Date() #Tarihi gormek icin
+as.Date("2023-03-09") #Tarihe cevirmek icin as.Date() kullaniyoruz.
+ISOdate(2023,5,10) #Farkli sekilde date vevirmek icin
+t = "1:47:59"
+tt = strptime(t, format = "%H:%M:%S") #String olarak girilen zamani donusturmek icin
+library("chron") #times ve chron(times()) fonskiyonlari icin eklememiz gerek kutuphane
+tt = times(t) #times ile sadece saat olarak aliyoruz.
+
+runif(2) #0-1 arasinda rasgele sayi uretmek icin.Icine ekledigimiz deger kac tane olusturmak istedigimiz.
+runif(2,1,10) #Sonradan ekledigimiz aralik belirtmek icin bu ornekte 1'den 10'a kadar uretecek.Fakat kusuratli degerler uretiyor.
+round(runif(2,1,10)) #Round ile kusurattan kurtarabiliriz.
+plot(runif(1000,1,100)) #Rastegele uretip uretmedigini gormek icin denemis.
+cor(x,y) #x ve y runif(1000,1,100) atanmis ve aralarindaki korelasyona bakilarak deger 0 yakin oldugundan aralarinda bir ilski olmadigini ve tesadufi old. varilir.
+#cor -1 ile 1 arasinda dir. 0 iliski olmadigini 1 pozitif yonlu -1 negatif yonlu iliski old gosterir.Degerler hangisine yakin ise o gruba dahil ederiz.
+sample(x,3) #Bir vektorden rastgele ornek almak icin.Girilen sayi degeri kac ornek alinmak istendigidir.
+set.seed(1111) #Rastgele uretec uretmeden once girip icerisindeki pozitif herhangi bir sayi olabilir.
+#Iki kere rastegele sayi urettigimizi dusunelim ilk yukaridaki satiri calistirip sayi uretip tekrar ayni sayiya sahip seed ile
+#Tekrar rastgele sayi urettigimizde ayni sayilari gosterir.Kontrol icin kullanabilirsin bu yontemi ayni sayilar ile
+
+
+#Dosya okuma
+read.table(file="~/Downloads/veriler.csv", header=TRUE,sep=',')
+#header TRUE eger baslik varsa onu baslik olarak algilayip veri olarak gormemesi icin.Default TRUE 'dur.
+#sep verilerin ayrimi ne ile yapilmis ise onu yaziyoruz.
+veri = read.table(file="~/Downloads/veriler.csv", header=TRUE,sep=',') #Degiskenede atiyabiliriz.
+veri = read.csv("https://bilkav.com/veriler.csv") #CSV dosyasini url vererek direkt okuyabilirsin.
+veri = read.csv(url("https://bilkav.com/veriler.csv")) #Bu sekilde de verileri url cekebiliriz.
+#file ilgili dosyanin path veriyoruz.
+View(veri) #Veriyi gormek icin View() fonksiyonunu kullanabiliriz.
+class(veri) #veri type data.frame olarak gozukuyor.
+dim(veri) #veri dim:satir stun.Bize kac satir ve stun oldugunu donderecek.
+#kolonlar ayri ayri type olarak geliyor ve lenght'i obje olarakta ilgili stun basligi olarak gozukuyor.
+length(veri[,2]) #Ikinci sutunun buyuklugunu donderir.
+length(veri$kilo) #Bu sekilde de uzunlugu gosterebiliriz.
+length(x) #length diger vektorler icin kullanabiliz.
+veri[,3]/veri[,2]^2 #Vucut kitle indexini verilerden alip olusturabiliriz.
+#read.table .csv dosyalari icin kullandik.
+veri = read.csv(file="~/Downloads/veriler.csv", header=TRUE,sep=',')
+veri = read.csv(file="~/Downloads/veriler.csv", header=TRUE,sep=',', dec=',') #dec reel sayilarin hangi sembolle ayrilacagini belirtmek icin
+veri = read.csv(file="~/Downloads/veriler.csv", header=TRUE,sep=',', na.strings="NA") #NA stringin nasil gosterilecegini belirtmek icin na.strings kullaniyoruz.
+read.delim(file="...") #Tab ile ayrilan verileri okumak icin
+#Yukaridaki sekilde csv dosyalarini alabiliriz.
+#read.spss (spss icin), read.arff (weka icin) daha bircok farkli sekilde verileri almak mumkun.
+#R hazir verilerde var Matlab'da oldugu gibi direkt alip kullanabilirsin.
+head(veri) #Ilk 6 satiri almak icin
+tail(veri) #Son 6 satiri almak icin
+head(veri, n=11L) #Istedigmiz satira kadar almak icin n=xL kullaniyoruz.
+#Yukaridaki islem tail icinde gecerli
+veri[1:6,2:4] #Bu sekilde belirli satir ve sutunlari alabiliriz.
+names(veri) #Basliklari almak icin
+mean(veri$boy) #Ortalama icin mean direkt baslik kabul etmiyor.Bu yuzden veri$boy seklinde yapiyoruz.
+#Yukaridaki ornekte boylarin ortalamasini almis olduk.
+boy = veri$boy #Bu sekilde degiskene atayabiliriz sadece boylari
+#Not baslik isimle erismek ile [,x] ayni islemler hangisi kolayina geliyor ise o sekilde alabilirsin.
+attach(veri) #Dataseti hafizaya yukluyor.
+#attach kullandiktan sonra $ kullanmadan direkt baslik ile cagirabiliriz.
+boy #Artik boy direkt gorebiliriz.
+detach(veri) #Hafizadan silmek icin kullanabiliriz.
+#Big data ile ugrasirkan attach genelde kullanilmaz.Cunku hafizayi cok kullandigi icin
+summary(veri) #Verilerin nasil dagildigini ve NA olanlari gormek icin kullanilabilir.
+#Not summary ile son stun bos olan deger gozukmuyor.
+as.factor(cinsiyet) #Cinsieti faktore ceviriyoruz.
+#Factor ayri bir tip
+veri$cinsiyeti <- as.factor(cinsiyet)
+levels(cinsiyet) #Kategorileri gormek icin
+#Simdi summary olarak baktigimizda eksik olan veriyi gorebiliyoruz.
+#Ayrica kac erkek ve kac kadin oldugunu da gorebiliyoruz.
+#factor ile numeric olan deger factor tipine donusmus oldu.
+veri$cinsiyet <- as.numeric(cinsiyet) #Tekrar numeric yapmak icin.
+#Fakat NA olan degerler var ise duzgun ceviremiyor.NA olarak bazi degerler kaliyor.
+cbind(veri, veri[,3]/veri[,2]^2) #Yaptigimiz vki yeni bir sutuna ekliyoruz.
+veri <- cbind(veri, veri[,3]/veri[,2]^2) #Tek seferlik gosterir fakat verimize eklemek icin atama yapmaliyiz.
+veri = veri[c("boy","kilo","yas","cinsiyet")] #Veriyi okurken istedigimiz kisimlari almak icin stun adlarina gore filtreleyebiliriz.
+
+#Dosya yazma
+write.csv(veri,file="~/Documents/vek.csv") #CSV formatinda disa aktarma
+write.table(...) #Tablo olarak veya matrisleri kaydetmek icin
+
+sink(file="ciktilar.txt") #Yaptigimiz islemlerin ciktisini bir dosyada almak icin sink() fonksiyonunu kullaniyoruz.
+summary(veri)
+sink() #En son dosyaya eklemek istedigimiz islemlerimiz bittiginde ise sink() deyip dosyaya kaydedilmesini sagliyoruz.
+
+pdf("BoyKilo.pdf") #PDF formatinda cikti almak icin sirayla asagidaki adimlarla birlikte yapilmalidir.
+plot(veri$boy,veri$kilo)
+dev.off()
+
+png("BoyKilo.png") #PNG formatinda cikti almak icin yine sirasiyla asagidaki adimlar ile birlikte calistirilmalidir.
+plot(veri$boy,veri$kilo)
+dev.off()
+
+dev.copy(png,"boykilo2.png") #Farkli yol ile kaydetmek icin background olmadan aliyor.
+plot(veri$boy,veri$kilo)
+dev.off()
+#dev.copy, dev.print, dev.copy2eps , dev.copy2pdf, dev.control fonksiyonlarida var.
+
+jpeg("BoyKilo.jpg") #jpeg formatinda kaydetmek icin
+plot(veri$boy,veri$kilo)
+dev.off()
+
+#Paket islemleri
+installed.packages() #Yuklu paketleri gormek icin
+require("readxl") #Paket yine yuklu olup olmadigini kontrol edebiliriz.Projeye dahil etmek icin
+installed.packages("readxl") #Kurmak icin
+remove.packages("readxl") #Kurulu paketleri kaldirmak icin
+
+#Grafikler
+#Barchart : Verilerin frekanslari veya sayilar uzerine cizilir.
+#Boxplot : Verilerin dagilimi uzerine cizilen grafikler
+table(cinsiyet) #Ilgili stunun tablosunu olusturmak icin
+#Tablo ile degerden kac tane oldugunu rahatlikla gorebilirsin.
+barplot(table(cinsiyet)) #Olusturdugumuz tabloyu cizdirmek icin.
+#barplot her stun cizdirmek anlamli degil o yuzden tabloyu cizdirdik.
+barplot(table(cinsiyet)/26) #Boldugumuz deger kac veri var ise
+#Yukaridaki islemler ile biz % ' lik olarak gostermis oluyoruz.
+#%'liklerin toplami 1 olacak. 0.5 == %50  0.05 == % 5
+barplot(table(cinsiyet)/26, main="Cinsiyetin yuzdelikleri") #main ile baslik ekliyebiliriz.
+barplot(table(cinsiyet)/26, main="Cinsiyetin yuzdelikleri",xlab="cinsiyet",ylab="Yuzde") 
+#Kordinatlarin ne olduklarini xlab ve ylab kullanarak yapabiliriz yukaridaki gibi
+barplot(table(cinsiyet)/26, main="Cinsiyetin yuzdelikleri",xlab="cinsiyet",ylab="Yuzde",names.arg=c("NA","Erkek","Kadin"))
+#names.arg ile stunlara isim vererek ne olduklarini yazabiliriz.
+barplot(table(cinsiyet)/26, main="Cinsiyetin yuzdelikleri",xlab="cinsiyet",ylab="Yuzde",names.arg=c("NA","Erkek","Kadin"),col=c("black","blue","red"))
+#col parametresi ile renklendirebiliriz.
+barplot(table(cinsiyet,cinsiyet < 'e'), bes=TRUE) #bes=TRUE ile ic ice gecmis olanlari yan yana gostermek icin yapiyoruz.
+barplot(table(cinsiyet)/26, main="Cinsiyetin yuzdelikleri",xlab="cinsiyet",ylab="Yuzde",names.arg=c("NA","Erkek","Kadin"),col=c("black","blue","red"),legend=c("NA","Erkek","Kadin"))
+#legend ile sag ustte ayrimi yapilmislarin ne oldugnunu belirtebiliyoruz.
+mosaicplot(table(cinsiyet,cinsiyet < 'e')) #mosaic seklinde gostermek icin
+pie(table(cinsiyet)/26, main="Cinsiyetin yuzdelikleri") #Pasta grafigini pie ile cizdirebiliriz.
+pie(table(cinsiyet)/26, main="Cinsiyetin yuzdelikleri",xlab="cinsiyet",ylab="Yuzde",names.arg=c("NA","Erkek","Kadin"),col=c("black","blue","red")) 
+#Ayni islem yapinca hata mesaji veriyor.Fakat cizdiriyor.Bazi ozellikler gostermiyor barplottaki gibi
+boxplot(boy) #Kutu grafigi cizdirmek icin boxplot kullaniyoruz.
+#Numeric degerler olmali yoksa hata veriyor cizdirmiyor dagilimi gosterdigi icin bu yuzden cinsiyeti gostermez.
+boxplot(boy,main="Boy dagilimi") #Yine main ile baslik verebiliriz.
+boxplot(boy ~ kilo, main="Kilo ve Boy dagilimi") #~ kullanarak iki stunu birlikte dagilimlarina bakabiliriz.
+boxplot(boy ~ cinsiyet, main="Boy cinsiyete gore dagilimi") #Bu sekilde cinsiyete gore ayristirabiliriz.
+hist(kilo) #Histogram gragini cizdirmek icin hist kullaniyoruz.Histogram surekli veriler icin old.Numeric olmayanlarda calismiyor.
+hist(kilo, main="Kilonun histogram grafigi") #main ile yie baslik ekliyebiliriz.
+hist(kilo, main="Kilonun histogram grafigi yuzdelik", freq=FALSE) #freq ile frekansi FALSE yaparak density ile yuzdeliklerini gorebiliriz.
+#freq default olarak TRUE oldugundan bize kac tane ilgili araliktaki veriden var onu bize gosterir.
+lines(density(kilo)) #Normalde cizgi olusturmasi gerekiyor fakat hata verdi.
+lines(density(kilo),col=2,lwd=2) #col renklendirip lwd line kalinlastirabiliriz.
+box(which="plot") #Cizdigimiz plotlari bir kutu icine alabiliriz bu satirdaki kod ile
+stem(boy) #Steam Leaf gosterimini stem ile yapiyoruz.Tam ve ondalik kisimlarinin bir gosterimi gibi dusunebiliriz.Stem tam Leaf ondalikar leafteki her biri bir ondalika karsilik gelir.
+stem(boy, scale=5) #scale ile steam leaf genisletip daraltabiliriz.
+#Steam ondalik yoksa onluk kismi govde steam olarak birlik haneyi leaf olarak aliyor sayi buyudukce bu steam degisiyor tabi yuzdelikleri de sayi degeri olarak aliyor.
+cor(boy,kilo) #Korealsyona bakmak icin cor kullaniyoruz fakat NA deger var ise NA doner hesaplama yapmaz.
+cor(boy,kilo, use="complete.obs") #complete.obs ile sadece girilen degerleri almak icin
+#Koralsyon tek boyutlu diziler icin varyans matisler icin kullaniyoruz.
+#Korelasyon 0'a yakinsa bu korelasyon iliski cok yok diebiliriz.1'e yakin olmasi daha iyidir.
+plot(boy,kilo) #Skatter plot icin plot komutunu kullanarak ciziyoruz.
+plot(boy,kilo,pch=8) #pch ile nokta gosterimini degistirebiliriz.
+plot(boy,kilo,pch="@") #pch'ye kendimizde bir karakter atayip gosterebiliriz.
+lines(boy,kilo) #Skater plotta cizilmis noktalari birlestirebiliriz.Tabi biz cizdigimiz degerleri vererek yaptik baska degerleri line aktarirsan farkli olur.
+plot(boy,kilo,type='l') #Yukaridaki islemi nokta olmadan yapmak icin.
+plot(boy,kilo,type='o') #Yukaridakinin daha sekil hali
+plot(boy,kilo,type='b') #Yukaridakinin bosluklu hali
+plot(boy,kilo,type='p') #Default hali type parametresi p olandir.
+lines(pr.lm~time, col="green", lwd=2) #Stackoverflow da fitting line cizmek icin bu kod eklenmis.Hata veriyor.
+plot(boy,kilo, cex=5) #cex ile dairelerin boyutlarini degistirmek icin.Default degeri 1'dir.
+plot(boy,kilo, main="Boy ve kilo", cex.main=0.8) #Basliginda boyutunu buyultup kucultebiliriz.
+plot(boy,kilo, cex.axis=3) #axis ile kordinat duzleminin degerlerini buyultup kucultebiliriz.
+plot(boy,kilo, cex.lab=3) #Kordinat etiketlerinin boyunut degistirmek icin
+plot(boy,kilo, col=3) #Renklerini degistirmek icin yine col kullaniyoruz.Renk ismini de verebiliriz sayi olarakta verilebilir.
+plot(boy,kilo,main="Boy ve kilo", col.main=4) #Basligin rengini degistirebiliriz.
+plot(boy,kilo, col.axis=2) #Kordinat duzleminin degerlerinin rengini degistirmek icin
+plot(boy,kilo, col.lab=6) #Kordinat etiketlerinin rengini degistirmek icin
+plot(boy,kilo,main="Boy ve kilo", font.main=4) #fontu degistirebiliriz.
+#1-4'e kadar 4 dahil 1==regular , 2==bold , 3==italik , 4==italik ve bold
+#Yukaridaki bircok ozellik sadece plota ozgu degil digerlerine de uygulanabilir.
+plot(boy[cinsiyet=='e'],kilo[cinsiyet=='e'],pch='e') #Sadece erkek degerleri almak icin
+points(boy[cinsiyet=='k'],kilo[cinsiyet=='k'],pch='k') #points ile nokta ekliyebilir bu sayede iki ayri cinsiyeti tek plotta rahatlikla gosterebiliriz.
+
+par(mfcol=c(1,2)) #Partitionlar bolmemize yarioyr.Stun bazli bolduk.
+plot(boy[cinsiyet=='e'],kilo[cinsiyet=='e'],pch='e',col=4)
+plot(boy[cinsiyet=='k'],kilo[cinsiyet=='k'],pch='k',col=2) #Ikincisinide plot olarak yapiyoruz point olarak degil.
+par(mfcol=c(1,1)) #Default olarak degerler 1'e 1 olur.
+par(mfrow=c(1,1)) #row col yazdigimizda ayni olur tek bir grafik cizer.
+par(mfrow=c(2,1)) #Partitionlar satir bazli bolmemiz icin mfrow kullandik.Satir ve sutun sayilarini bu sefer tam tersi verdik.
+plot(boy[cinsiyet=='e'],kilo[cinsiyet=='e'],pch='e',col=4)
+plot(boy[cinsiyet=='k'],kilo[cinsiyet=='k'],pch='k',col=2)
+
+plot(boy[cinsiyet=='k'],kilo[cinsiyet=='k'], axes=FALSE) #Kordinat cizgilerini kaldirmak icin axes FALSE yapabiliriz.
+axis(side=1, at=c(10,100),label=c("min","max")) #axis ile kordinat cizgisini ozellectirebiliriz.
+#Side 1'den 4 1==x 2==y 3==x' 4==y' 3 ve 4 eksenlerin karsinda oluyor yani dort koseyide ozellestirebiliyoruz.
+#at ile kordinat bolumlerinin ne olacai ve labellara bolumlere isim verebiliyoruz.
+#Not:axis bende calimadi.
+abline(lineerRegression,col="blue") #Regresyon dogrusunu gormek icin buyuk ihtimalle digerleri icinde olur.
+abline(lm(veri$boy~veri$kilo)) #Fitting line cizdirmek icin
+#Not:abline bende calismadi.
+#Not: TRUE == T , FALSE==F kisa halini de yazablirsin.
+
+library("GGally") #ggcorr ile grafik olusturmak icin
+ggcorr(veri) #Korelasyonu gormek icin cizdirdigimiz grafik
+
+
+#Istatiksel dagilimlar
+#Bir olayin arka arkaya gelme sikligini Binom ile olcebiliriz.
+dbinom(x=10,size=50,prob=0.05) #Binom hesabi icin dbinom kullaniyoruz.
+#      x==k size==n prob==P() yani olma olasiligi
+dbinom(x=5:8,size=50,prob=0.05) #x degerini belli bir araliktaki tum degerler icin tek tek hesaplatabiliriz.
+sum(dbinom(x=5:8,size=50,prob=1/6)) #Kumulatif olarak toplam veya biriken olarak yapmak icin sum kullaniyoruz.
+pbinom(q=8,size=50,prob=1/6) #Yine kumalatif icin
+pbinom(q=8,size=50,prob=1/6,lower.tail=FALSE) #1 cikarilmis halini bulmak icin FALSE yaptik.Default TRUE'dur.Dagilimin sagindan veya solundan topluyor.
+dnorm(x=10,mean=0,sd=5) #sd==Standart Division==S^2 standart sapma
+pnorm(q=10,mean=0,sd=5) #p x yerine q kullaniyoruz.
+#nomr ile normal dagilimina bakiyoruz.
+#Ornek: Normal dagilima sahip ortalama 80kg standart sapmasi 3 olsun.Kisinin 90 kg olma olasiligini hesaplarken
+pnorm(90,mean=80,sd=3) #Normal dagilim fonksiyonu pnorm bu ornekte %5 ihtimalle 90kg olacaktir.
+
+x <- -50:50
+normal = dnorm(x,mean=0,sd=7)
+plot(x,normal) #Bu islem ile normal dagilimi cizdirebiliriz.
+abline(v=0) #Ortalamanin oldugu yerden v==vertical dikey cizgi cizdirdik.
+abline(h=0.03) #h==horizontal yatay cizgi cizmek icin
+#Ikisini bir cizdirdigimizde belirledigimiz noktada kesistirebiliriz.
+#abline verdigimiz degerler grafikte yoksa gostermiyor.Cizgi gelmediginde girdigin degerlere dikkat et.
+dpois(x=3, lambda=5) #Poisson dagilimi==Poisson Distribution olarak hesaplama yapmak icin dpis.
+dpois(x=3:7, lambda=5) #Yine degerleri belli aralikta verebiliriz.
+sum(dpois(x=3:7, lambda=5)) #Yine topliyabiliriz.
+ppois(q=7, lambda=5) #ppois yine kullanabiliriz.Yine benzer islemler yapilabilir.
+#Student t Distribution==t dagilimi icin
+qt(0.05,df=25)
+pt(q=0.1,df=65)
+pt(0.1,65) #q ve df yazmadan oluyor ama sonradan bu degerler hangileriydi dememek icin eklenebilir.
+dt(x=0.1,df=50)
+#F Distribution==f dagilimi icin
+pf,df,qf,rf var fakat kullanimlarina yine bak
+#Exponential Distribution 
+dexp,pexp,qexp,rexp var fakat kullanimlarina yine bak
+#Yukarida saydiklarimizda q ve r var digerlerinde sadece d ve p gosterdik ama
+#t-Test
+t.test(boy) #Tek orneklemli t-Testi icin
+##t-Testinin sonucu yukaridaki kodun
+	One Sample t-test
+
+data:  boy
+t = 40.4, df = 24, p-value < 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 154.2555 170.8645
+sample estimates:
+mean of x 
+   162.56 
+##
+#95 percent confidence interval %95 guven duzeyinde calisiyor sonucta belirtiyor.
+#mean of x 162.56 vermis ortalamayi da bize sonucta gosteriyor.
+t.test(boy,conf=0.99) #conf ile guven duzeyini bu ornekte %99 yaptik.
+t.test(boy,conf=0.99, alt="less", mu=170) #alt kontrolun ne olacagi bu ornekte kucukmu yu kontrol ettik.
+#alt==alternative hypothesis Default:mean is not equal to 0 sonucu true veya false donderiyor.
+#mu kontrol edecegi degeri verdik.
+#alt icin "two.sided":esit mi kontrolu, "less":kucuk mu, "greater":buyuk mu kontrolunu bu degerleri vererek bulabiliriz.
+t.test(boy,kilo) #Welch Two Sample t-test==Iki orneklemli t-Testi
+sonuc = t.test(boy,kilo) Sonucu bir degiskene atayip islemler yapabiliriz.
+sonuc$conf.int #Guven duzeyini gorebiliriz.
+sonuc$data.name #Alinan verinin ismini gormek icin
+sonuc$method #Hangi method kullanildigini goremk icin
+sonuc$alternative #alternative hypothesis hangi parametre ile yapildigini
+sonuc$stderr #Standart hatanin ortalamaya gore farkina bakiyor sonucu donderiyor.
+sonuc$estimate #Ortalamalari gosteriyor.
+sonuc$parameter #df degerini donderiyor.
+sonuc$statistic #t testinin sonucunu donderiyor.
+sonuc$p.value #p value gormek icin
+#Daha ayrintili bakmak icin help(t.test) buradaki Value basliginda bulunuyor.
+
+#Veri islemleri
+veri[veri == ""] = NA #Bos olan degerleri NA yapmak icin.NA ile islem yapmak daha kolay old. bu islem yapilmasi iyi olur.
+veri = na.omit(veri) #NA olan satirlari silmek icin
+#Not bos olan degeri silmiyor.Ilgili kisimda NA yazilmis olmalidir.
+veri$yas[is.na(veri$yas)] = round(mean(veri$yas, na.rm=TRUE)) #Bos olan degeri ortalama bir degerle doldurma islemi icin.
+#Not:Bizim veri seti tam sayilardan olustugu icin veriyi bozmamak adina yuvarladik.Veriye gore degistirebilirisiniz.
+m1 = m1[-grep("X.1", colnames(m1))] #Burda ismini verdigimiz colonu silecek.
+
+##Veri Normalizasyonu
+install.packages("clusterSim")
+library("clusterSim")
+normallesmis = data.Normalization(veri$boy,type="n4", normalization="column") #data.Normalization verileri normallestirmek icin kullaniyoruz.
+#Not : NA degerler var ise hata veriyor.Onceden veri duzenlenmis olmali yada if (sum(as.numeric(x) <= 0) > 0) kosulu eklenmelidir.
+#type="n4" min-max normalizasyonu icin tip n4 yapiyoruz.
+##type listesi
+n0 : Nomralizasyon olmadan
+n1 : Standardization [zscore icin] (x-mean)sd
+n2 : positional standization (x-median)/mad)
+n3 : unitization ((x-mean)/range)
+n4 : utilization with zero minimum [max-min icin] ((x-min)/range)
+n5 : normalization in range <-1,1> ((x-mean)/max(abs(x-mean)))
+n6 : quotitent transformation (x/sd)
+n6a : positonal quotient transformation (x/mad)
+n7 : quotient transformation (x/range)
+n8 - quotient transformation (x/max)
+n9 - quotient transformation (x/mean)
+n9a - positional quotient transformation (x/median)
+n10 - quotient transformation (x/sum)
+n11 - quotient transformation (x/sqrt(SSQ))
+n12 - normalization ((x-mean)/sqrt(sum((x-mean)^2)))
+n12a - positional normalization ((x-median)/sqrt(sum((x-median)^2)))
+n13 - normalization with zero being the central point  ((x-midrange)/(range/2))
+##
+#normalization="column" normalizasyonu sutun bazli yapmak icin
+#Bu ornek ve veriler 0-1 araligina indirgenmistir. summary(normallesmis) bakabilirsin.
+#1 = max 0 = min olarak esitleyip degerleri bu yapiya uygun sekilde 0-1 arasinda degerler veriyor.
+#Formul min-max normalizasyonu : (veri-min(veri))/(max(veri)-min(veri))
+#Formul zscore : (veri-mean(veri))/ sd(veri)
+#ZScore ile veri -3 ile +3 araligina indirgenmis oluyor.
+
+
+library("caret") #Caret kutuphanesi yuklu olmalidir.
+islem = preProcess(as.data.frame(veri$kilo),method=c("range")) #max-min normalizasyonu icin alttaki kod ile birlikte yapilabilir.
+normallesmisKilo = predict(islem, as.data.frame(veri$kilo)) #Nokta tahmini yapmak icin
+normallesmisKilo = predict(islem, as.data.frame(veri$kilo), interval="confidence") #Aralik tahmini icin interval parametresi ekledik.
+
+##preProcess parametreleri
+preProcess(
+       x,
+       method = c("center", "scale"),
+       thresh = 0.95,
+       pcaComp = NULL,
+       na.remove = TRUE,
+       k = 5,
+       knnSummary = mean,
+       outcome = NULL,
+       fudge = 0.2,
+       numUnique = 3,
+       verbose = FALSE,
+       freqCut = 95/5,
+       uniqueCut = 10,
+       cutoff = 0.9,
+       rangeBounds = c(0, 1),
+       ...
+)
+###
+##preProcess methodlari
+method: a character vector specifying the type of processing.
+          Possible values are "BoxCox", "YeoJohnson", "expoTrans",
+          "center", "scale", "range", "knnImpute", "bagImpute",
+          "medianImpute", "pca", "ica", "spatialSign", "corr", "zv",
+          "nzv", and "conditionalX" (see Details below)
+##
+
+normallesmisYas = as.data.frame(scale(veri$yas)) #ZScore normalizasyonu bu sekilde de yapilabilir.
+
+#Istatistik
+install.packages("Rcmdr")
+library("Rcmdr") #SPSS gibi bir arayuz calistirmak icin
+shapiro.test(veri$boy) #Shapiro-Wilk normality test icin
+
+library("GGally") #ggcor icin yani korelasyon grafigi icin.
+ggcorr(veri)
+cor(veri$Kilo, veri$Yas) #Iki degerin korelasyon katsayini bulmak icin
+
+#Makine Ogrenmesi
+library("class") #K-NN icin eklenmesi gereken kutuphane buyuk ihtimalle digerleri icin de
+#k-Means'te yazilmis fakat k-NN icinde gecerli buyuk ihtimalle k < n olmali veri sayimizdan kucuk k degeri secilmelidir.
+#k-Means cikan d uzakligi en kucugunu bulmaya calisiyoruz bu sayede ortalamaya yakin kumeler elde edebiliriz.
+#Silhouette Index ile k-Means k degerini en optimum sekilde bulmak icin
+#k-Means O(tkn) 'dir. t : Iterasyon sayisi , k : Kume sayisi , n : Veri setindeki ornek sayisi
+#Danismansiz ogrenen modeller icin veriyi bolmemize gerek yoktur.
+
+install.packages("caret") #Caret paketini yuklemek icin, createDataPartition,confusionMatrix kullanmak icin import edilmis olmasi gerekiyor.
+library("caret") #Caret paketini import etmek icin
+egitim = createDataPartition(y=veri$cinsiyet,p=0.70,list=FALSE) #Verileri parcalamak icin p : hangi oranda parcalanacagi , list : liste olarak tutulup tutulmayacagini belirtmek icin
+test = createDataPartition(y=veri$cinsiyet,p=0.30,list=FALSE) #Sanirim y parametresinden kaynakli olarak hata veriyor bu iki kod.
+veri[egitim,]
+veri[test,]
+
+egitimIndis = sample(1:18,replace=FALSE) #replace TRUE oldugunda secilen ornek tekrar secilebilir.
+testIndis = sample(19:26,replace=FALSE) #Kendimiz hesap yapip bu sekilde indexleri almaya calisacagiz.
+#Fakat rastgele pek olmuyor sadece siralamalar degisiyor.
+veri[egitimIndis,]
+veri[testIndis,]
+
+##
+confusionMatrix(
+       data,
+       reference,
+       positive = NULL,
+       dnn = c("Prediction", "Reference"),
+       prevalence = NULL,
+       mode = "sens_spec",
+       ...
+)
+
+
+#
+#dnn ile olusacak matrixin stunlarina isimler vermemiz icin kullaniliyor.
+##
+
+library("plyr") #revalue icin kullanacagimiz kutuphane
+revalue(og$cinsiyet, c("e" = "0", "k" = "1"))
+
+
+#K-NN
+og = as.data.frame(read.csv("https://bilkav.com/veriler.csv"), header=TRUE, sep=',', dec='.')
+og$cinsiyet = as.factor(og$cinsiyet)
+egitimIndis = createDataPartition(y=veri$cinsiyet,p=0.70,list=FALSE) 
+egitim = og[egitimIndis,]
+test = og[-egitimIndis,]
+testNitelik = test[,-5]
+testHedefNitelik = test[,5]
+egitimNitelik = egitim[,-5]
+egitimHedefNitelik = egitim[[5]]
+dogruluk = NULL
+k = 10
+for(i in 1:k){
+tahminSinif = knn(egitimNitelik,testNitelik,egitimHedefNitelik, k=i)
+dogruluk[i] = mean(tahminSinif == testHedefNitelik)
+dogruluk[i] = round(dogruluk[i], 2)
+}
+
+#Predict icin degerler data frame olmalidir.
+plot(lineer) #Regresyon modeli ile alakali olarak grafikler gosterir.
+lineer = lm(bagimli ~ bagimsiz, data=veri)
+multiple = lm(bagimli ~ ., data=veri) #Nokta tum bagimsiz degiskenleri almak icin
+multiple = lm(bagimli ~ .-age, data=veri) #Bagimsizlardan age cikarmak icin
+
+library("car")
+vif(multiple) #10'dan buyuk ise coklu dogrusal baglanti sorunu oldugunu gosterir. 1 'e yakin olmalidir.
+
+##family
+binomial(link = "logit")
+gaussian(link = "identity")
+Gamma(link = "inverse")
+inverse.gaussian(link = "1/mu^2")
+poisson(link = "log")
+quasi(link = "identity", variance = "constant")
+quasibinomial(link = "logit")
+quasipoisson(link = "log")
+##
+
+install.packages("class")
+install.packages("randomForest") #Random Forest icin
+install.packages('e1071') #SVR için
+
+lineer_dan = lm(egitim_dan$Overall ~ egitim_dan$Gender,data=egitim_dan) #Lineer Regression
+
+logistic_dan = glm(egitim_dan$Overall ~ egitim_dan$Gender, data=egitim_dan, family = "Gamma") #Logistic Regression
+
+multiple_dan = lm(egitim_dan$Overall~egitim_dan$Gender + egitim_dan$Division + egitim_dan$Age ,data=egitim_dan) #Multiple Regression
+
+randomFor_dan = randomForest(x = egitim_dan[-12],y = egitim_dan$Overall,ntree = 50) #Random Forest
+
+svr_dan = svm( egitim_dan$Overall~ egitim_dan$Gender + egitim_dan$Division + egitim_dan$Age, data = egitim_dan, type='eps-regression') #SVR
+
+
+#Makine ogrenmesi sonuclarinin anlamalari
+#cofficients intercept beta0 sapka degeri
+#cofficients lstat beta1 sapka degeri
+#* sayisi fazla ise o kadar anlamli *** ornek
+#DF serbestlik derecesi
+#Estimate tahmin edilen degerler
+#Pr(>|t|) ile hipotez testleri
+#Residuals kalintilar fitting line ile farklarini gosterir.
+#Residual Standart Eror 1'e yakin bir deger olmali
+#R-squared bagimli degiskenin bagimsiz degiskeni ne kadar acikladigini gosteriyor. 1,70 1,80 olmasi istenir.
+#p-value hipotez testi sig gore anlamli old. gosterir.
+anova(lineer) #Anova gore bilgiler gosterir.
+attributes(lineer) #Modlin icindeki degerleri gorebilmek icin.
+confint(lineer) #Guven araligimizi gormek icin
+confint(lineer, level=0.99) #Guven araligini degistirmek icin level kullanabiliriz.
+sigma(lineer) #RSS==Residual Standart Error gosterir.
+sigma(lineer) *100 / mean(marathon$Gender) #Yuzdelik olarak gormek icin
+
+par(mfrow=c(2,2)) #2'ye 2 olarak bolmek icin
+plot(lineer) #Grafikleri cizdirmek icin
+##
+Source : https://github.com/MustafaNayansak/R-ile-Makine-Ogrenmesi-Uygulamalari-/blob/master/Do%C4%9Frusal%20Regresyon%20Analizi.R
+# 1. Grafik için; Varyans homojenliği var mı yok mu diye bakıyoruz. Noktaların 0 etrafında rasgele dağılması istenir - gözlem sayısının az olması sebebi ile grafikler subjektiftir, yapılan yorumlar yanlıdır.
+# 2. Grafik için; Artıkların normal dağılıp dağılmadığını belirtir. Bir doğru üzerinde olması istenir. Görsel olarak normal dağılıyor denilebilir ama test yapılması gerekmektedir.
+# 3. Grafik için; Standartlaştırılmış artık değerler için ve fitted valuelar için inceliyoruz. 1. grafikle benzer yapıdalar.
+# 4. Grafik için; Standardizied residuals kısmı uç değerlerin veya aykırı gözlem etrafında olup olmadığını gösterir. Standardized gözlemlerin +3 ve -3 değerleri arasında olup olmadığı incelenir.
+# 4. Grafik için; Leverage ile etkin gözlem olup olmadığına bakıyoruz.- Leverege için kriter 2*p/n. Hesaplanan değer bu kriteri geçiyor ise etkin gözlemdir. Yani modelin başarısını doğrudan etkiler yorumu yapılabilir.
+
+###
+#Residuals vs Fitted kalintilarin dogru uzerindeki degerleri
+#Scale-Location stanartlastirilmis residuals gormek icin
+#Cook's distance residuals ile gercek degerler arasindaki uzakligi gosterir.
+#Leverage degerleri aykiri deger var ise bazi durumlarda ilgili degerin cikarilmamasi gerekebilir.Bize cikarildiginda tahmini etkileyecek degerleri gosterir.
+
+install.packages("olsrr")
+library("olsrr") #Linner regresyon icin bazi grafikleri cikartiyor.
+ols_plot_response(model) #Bagimli degiskein yayilimi
+ols_test_normality(model) #Normallik testi
+ols_test_breusch_pagan(model) #Varyans homojenligi testi
+ols_coll_diag(model) #Coklu dogrusal baglanti problemi
+ols_step_all_possible(model)
+
+#Normal Q-Q standart valuleri gosterir cok kirilma olmamalidir.
+plot(resid(lineer)) #Kalintirlari cizdirmek icin
+plot(resid(lineer), type='l') #type atanarak renk vererekte yapabilirsin.
+plot(rstudent(model)) #Standartlistirilmis artiklar rstudent ile bakiyoruz.
+AIC(lineer) #Deger dusuk olmalidir.Modelleri karsilastirmak icinde bakabilirsin.
+librar("MASS")
+modelaic = stepAIC(lineer)
+resamples(model_list) #Verilen listedeki modelleri karsilastirmak icin
+
+library("MASS") #stepAIC icin
+stepAIC(ml)
+AIC(ml
+sigma(ml) #RSS==Residual Standart Error gosterir.
+plot(resid(ml)) #Kalintirlari cizdirmek icin
+plot(ml)
+
+#Verilerin nasil dagildigini gostermek icin scatter.smooth kullandik.
+scatter.smooth(x =veri$Kilo, y=veri$Yas, main ="Kilo ve Yas veri dagilimi")

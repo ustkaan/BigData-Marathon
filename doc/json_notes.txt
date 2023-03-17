@@ -1,0 +1,52 @@
+.json #Uzantisidir.
+JSON == JavaScript Object Notation
+#XML' e gore daha kucuk boyutta
+#XML' e gore daha hizli calisir.
+{} #Suslu parantez ile baslar ve suslu parantez ile biter.
+#Son elemani pythonda oldugu gibi virgul eklemeden bitiriyoruz digerlerinde virgulle ayiriyoruz.
+
+{
+    araba : "TOGG",
+    takim : ["Trabzon", "BJK"],
+    fiyat : 15000,
+    kazandi : true
+    odul : null
+} 
+
+#Obje turunden degeri asagidaki gibi tanimliyoruz.
+{
+    telefon : {
+        marka : "Librem5",
+        fiyat : 500.08
+    }
+}
+
+#Array yapisinda asagidaki gibi kullanimda
+{
+    "musteriler" : [
+    {
+        ad : ahmet
+        soyad : yilmaz
+    },
+    {
+        ad : ayse
+        soyad : yilmaz
+        siparisID : 1556478
+    }
+    
+    ]
+}
+#Yukarida oldugu gibi ayni icerikte olmak zorunlulugu yoktur.
+
+#JS
+<script>
+    var "urun"= { 
+        urunAdi : "Domates",
+        fiyat : 2
+    };
+    var jsonUr = JSON.stringify(urun); #JSON string formatina donusturmek icin
+    var veri = JSON.parse(jsonUR) #Parse islemi jsona donusturmek icin islem yapabilmek icin
+    
+    alert(veri.urunAdi);
+    alert(veri[x].urunAdi); #Dizilerde index nurmarsina gore
+</script>
